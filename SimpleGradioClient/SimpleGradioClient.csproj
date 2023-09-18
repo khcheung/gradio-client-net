@@ -1,0 +1,15 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <Version>0.0.1</Version>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <RootNamespace>Simple.GradioClient</RootNamespace>
+    <AssemblyName>Simple.GradioClient</AssemblyName>
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <PackageProjectUrl>https://github.com/khcheung/gradio-client-net</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/khcheung/gradio-client-net</RepositoryUrl>
+  </PropertyGroup>
+
+</Project>
