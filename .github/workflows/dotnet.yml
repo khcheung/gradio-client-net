@@ -4,8 +4,7 @@
 name: .NET
 
 on:
-  push:
-    branches: [ "main" ]
+  push:    
     tags:
       - '**'
   
