@@ -3,7 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.7.34024.191
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleGradioClient", "SimpleGradioClient\SimpleGradioClient.csproj", "{AAAE2AD3-086B-4ACF-84D7-47025B7FF5D9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimpleGradioClient", "SimpleGradioClient\SimpleGradioClient.csproj", "{AAAE2AD3-086B-4ACF-84D7-47025B7FF5D9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestConsole", "TestConsole\TestConsole.csproj", "{648FF344-5991-41A0-BAEF-43DC240E94B7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestProject", "TestProject\TestProject.csproj", "{7321BC35-18CF-4289-9453-B91A0FA2AA32}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +19,14 @@ Global
 		{AAAE2AD3-086B-4ACF-84D7-47025B7FF5D9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AAAE2AD3-086B-4ACF-84D7-47025B7FF5D9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AAAE2AD3-086B-4ACF-84D7-47025B7FF5D9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{648FF344-5991-41A0-BAEF-43DC240E94B7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{648FF344-5991-41A0-BAEF-43DC240E94B7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{648FF344-5991-41A0-BAEF-43DC240E94B7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{648FF344-5991-41A0-BAEF-43DC240E94B7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7321BC35-18CF-4289-9453-B91A0FA2AA32}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7321BC35-18CF-4289-9453-B91A0FA2AA32}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7321BC35-18CF-4289-9453-B91A0FA2AA32}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7321BC35-18CF-4289-9453-B91A0FA2AA32}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
