@@ -12,7 +12,7 @@ Url: https://huggingface.co/spaces/alexkhcheung/gradiotest
 ## Sample Code
 
 ```csharp
-﻿public class Program
+public class Program
 {
     public static async Task Main(string[] args)
     {
