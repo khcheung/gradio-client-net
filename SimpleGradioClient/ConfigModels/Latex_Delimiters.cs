@@ -1,4 +1,6 @@
-﻿namespace Simple.GradioClient.ConfigModels
+﻿#nullable disable
+
+namespace Simple.GradioClient.ConfigModels
 {
     public class Latex_Delimiters
     {

@@ -1,4 +1,6 @@
-﻿namespace Simple.GradioClient.WebsocketModels
+﻿#nullable disable
+
+namespace Simple.GradioClient.WebsocketModels
 {
     public class WebSocketProcessCompletedOutput
     {
