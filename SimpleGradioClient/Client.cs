@@ -1,15 +1,16 @@
-﻿using System.Net.Http.Json;
+﻿//using System.Net.Http.Json;
 using System.Net.WebSockets;
 using System.Text;
 using Simple.GradioClient.ConfigModels;
 using Simple.GradioClient.WebsocketModels;
 using System.Runtime.InteropServices;
+using Newtonsoft.Json;
 
 namespace Simple.GradioClient
 {
     public class Client
     {
-        private Uri mHost = null!;
+        private readonly Uri mHost = null!;
         private HttpClient mHttpClient = null!;
         private Boolean mLoadConfig = false;
         private Config mConfig = null!;
@@ -24,8 +25,9 @@ namespace Simple.GradioClient
             this.mHttpClient = new HttpClient();
             mHttpClient.BaseAddress = mHost;
 
-            var response = await mHttpClient.GetAsync("/config");
-            this.mConfig = (await response.Content.ReadFromJsonAsync<Config>())!;
+            var response = await mHttpClient.GetAsync("/config");            
+            var configString = await response.Content.ReadAsStringAsync();
+            this.mConfig = JsonConvert.DeserializeObject<Config>(configString)!;
             if (mConfig == null)
             {
                 throw new Exception("Load Config Fail.");
@@ -112,7 +114,7 @@ namespace Simple.GradioClient
                 while (webSocket.State == WebSocketState.Open)
                 {
 
-                    var r = await webSocket.ReceiveAsync(buffer, CancellationToken.None);
+                    var r = await webSocket.ReceiveAsync(new ArraySegment<byte>(buffer), CancellationToken.None);
                     if (r.MessageType == WebSocketMessageType.Close)
                     {
                         await webSocket.CloseAsync(WebSocketCloseStatus.NormalClosure, null, CancellationToken.None);
@@ -131,10 +133,10 @@ namespace Simple.GradioClient
                                     fn_index = fnIndex,
                                     session_hash = session
                                 };
-                                var obj1String = System.Text.Json.JsonSerializer.Serialize(obj1);
+                                String obj1String = Newtonsoft.Json.JsonConvert.SerializeObject(obj1)!;
                                 //Console.WriteLine($"Out: {obj1String}");
                                 var obj1Buffer = Encoding.UTF8.GetBytes(obj1String);
-                                await webSocket.SendAsync(obj1Buffer, WebSocketMessageType.Text, true, CancellationToken.None);
+                                await webSocket.SendAsync(new ArraySegment<byte>(obj1Buffer), WebSocketMessageType.Text, true, CancellationToken.None);
                                 break;
                             case "send_data":
                                 var objData = new
@@ -143,10 +145,10 @@ namespace Simple.GradioClient
                                     fn_index = fnIndex,
                                     session_hash = session
                                 };
-                                var obj4String = System.Text.Json.JsonSerializer.Serialize(objData);
+                                var obj4String = Newtonsoft.Json.JsonConvert.SerializeObject(objData);
                                 //Console.WriteLine($"Out: {obj4String}");
                                 var obj4Buffer = Encoding.UTF8.GetBytes(obj4String);
-                                await webSocket.SendAsync(obj4Buffer, WebSocketMessageType.Text, true, CancellationToken.None);
+                                await webSocket.SendAsync(new ArraySegment<byte>(obj4Buffer), WebSocketMessageType.Text, true, CancellationToken.None);
                                 break;
                             case "process_completed":
                                 var processCompleted = Newtonsoft.Json.JsonConvert.DeserializeObject<WebSocketProcessCompleted>(inMsg)!;
@@ -171,7 +173,7 @@ namespace Simple.GradioClient
         
         public async Task<T> PredictAsync<T>(Int32 fnIndex, params String[] parameters)
         {
-            T result = default(T)!;
+            T result = default!;
             var predictResult = await PredictAsync(fnIndex, parameters);
             if (predictResult != null && predictResult.Length > 0)
             {
