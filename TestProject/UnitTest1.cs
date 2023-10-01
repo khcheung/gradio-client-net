@@ -40,5 +40,16 @@ namespace TestProject
             Console.WriteLine(result);
             Assert.AreEqual("Hello Test!!", result[0]);
         }
+
+        [TestMethod]
+        public async Task TestVectorReturn()
+        {
+            var client = new Simple.GradioClient.Client(new Uri("https://alexkhcheung-gradiotest.hf.space/"));
+            var result = await client.PredictAsync<double[]>("/dummyvector", "Test");
+            Console.WriteLine(result);
+            Assert.AreEqual(1.0f, result[0]);
+            Assert.AreEqual(2.0f, result[1]);
+            Assert.AreEqual(3.0f, result[2]);
+        }
     }
 }

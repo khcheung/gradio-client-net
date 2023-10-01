@@ -1,9 +1,9 @@
 ﻿using System.Net.Http.Json;
 using System.Net.WebSockets;
-using System.Text.Json;
 using System.Text;
 using Simple.GradioClient.ConfigModels;
 using Simple.GradioClient.WebsocketModels;
+using System.Runtime.InteropServices;
 
 namespace Simple.GradioClient
 {
@@ -34,6 +34,18 @@ namespace Simple.GradioClient
         }
 
         public async Task<String[]> PredictAsync(String apiName, params String[] parameters)
+        {        
+            var apiIndex = await FindFunctionIndex(apiName);
+            return await PredictAsync(apiIndex, parameters);
+        }
+
+        public async Task<T> PredictAsync<T>(String apiName, params String[] parameters)
+        {
+            var apiIndex = await FindFunctionIndex(apiName);
+            return await PredictAsync<T>(apiIndex, parameters);
+        }
+
+        private async Task<Int32> FindFunctionIndex(String apiName)
         {
             // Load Config if not Loaded
             if (mLoadConfig == false)
@@ -58,7 +70,7 @@ namespace Simple.GradioClient
             }
 
             var apiIndex = this.mConfig.dependencies.IndexOf(api);
-            return await PredictAsync(apiIndex, parameters);
+            return apiIndex;
         }
 
         public async Task<String[]> PredictAsync(Int32 fnIndex, params String[] parameters)
@@ -110,7 +122,7 @@ namespace Simple.GradioClient
                     {
                         var inMsg = Encoding.UTF8.GetString(buffer, 0, r.Count);
                         //Console.WriteLine($"In: {inMsg}");
-                        var inMsgObj = JsonSerializer.Deserialize<WebSocketInMsgBase>(inMsg)!;
+                        var inMsgObj = Newtonsoft.Json.JsonConvert.DeserializeObject<WebSocketInMsgBase>(inMsg)!;
                         switch (inMsgObj.msg)
                         {
                             case "send_hash":
@@ -137,7 +149,7 @@ namespace Simple.GradioClient
                                 await webSocket.SendAsync(obj4Buffer, WebSocketMessageType.Text, true, CancellationToken.None);
                                 break;
                             case "process_completed":
-                                var processCompleted = JsonSerializer.Deserialize<WebSocketProcessCompleted>(inMsg)!;
+                                var processCompleted = Newtonsoft.Json.JsonConvert.DeserializeObject<WebSocketProcessCompleted>(inMsg)!;
                                 if (processCompleted.output.data != null && processCompleted.output.data.Length > 0)
                                 {
                                     output = processCompleted.output.data;
@@ -156,6 +168,21 @@ namespace Simple.GradioClient
             })!;
             return result;
         }
+        
+        public async Task<T> PredictAsync<T>(Int32 fnIndex, params String[] parameters)
+        {
+            T result = default(T)!;
+            var predictResult = await PredictAsync(fnIndex, parameters);
+            if (predictResult != null && predictResult.Length > 0)
+            {
+                var jsonString = predictResult[0];
+                result = Newtonsoft.Json.JsonConvert.DeserializeObject<T>(jsonString)!;
+            }
+            return result;
+
+        }
+
+     
     }
 
 

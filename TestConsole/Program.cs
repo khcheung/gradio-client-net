@@ -7,8 +7,7 @@
         Console.WriteLine(result1[0]);
         var result2 = await client.PredictAsync(0, "Test");
         Console.WriteLine(result2[0]);
-        //var result = await client.PredictAsync(1, "Test");
-        //var result = await client.PredictAsync(2, "Test");
-        //Console.WriteLine(result);
+        var result3 = await client.PredictAsync<double[]>("/dummyvector", "Test");
+        Console.WriteLine(result3);        
     }
 }
