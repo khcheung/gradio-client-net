@@ -5,9 +5,23 @@ Gradio Client (.NET)
 Only support text in and text out.
 
 
-## Testing on HuggingFace Space
+## Testing Gradio API on HuggingFace Space
 Url: https://huggingface.co/spaces/alexkhcheung/gradiotest
+```python
+import gradio as gr
 
+def greet_return(name):
+    return "Hello " + name + "!!"
+...
+with gr.Blocks() as iface:    
+    with gr.Row():
+        inp = gr.Textbox(placeholder="Name Return")
+        out = gr.Textbox()
+    btn = gr.Button("Run")
+    btn.click(fn=greet_return, inputs=inp, outputs=out)
+...
+iface.queue().launch()
+```
 
 ## Sample Code
 
