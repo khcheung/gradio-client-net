@@ -14,6 +14,11 @@
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
     <LangVersion>latest</LangVersion>
+    <Title>Simple Gradio Client</Title>
+    <Description>Experimental Client for Gradio.App as API.
+
+Support Text In and Out.</Description>
+    <PackageTags>Gradio;Gradio Client</PackageTags>
   </PropertyGroup>
 
   <ItemGroup>
